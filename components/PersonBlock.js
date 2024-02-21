@@ -1,15 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
-const PersonBlock = ({ name, color }) => {
+const PersonBlock = ({ initialName, color }) => {
+    const [name, setName] = useState(initialName); // State pour le nom du joueur
     const [score, setScore] = useState(0);
-    const [inputValue, setInputValue] = useState('');
-    const [showInput, setShowInput] = useState(false);
     const [operationValue, setOperationValue] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInputValue, setModalInputValue] = useState('');
-    const inputRef = useRef(null);
 
     const handleShortPress = (value) => {
         setScore(score + value);
@@ -25,7 +23,6 @@ const PersonBlock = ({ name, color }) => {
         }
     }, [modalVisible]);
 
-
     const handleModalButtonPress = (value) => {
         setScore(score + value);
         setModalVisible(false);
@@ -33,7 +30,13 @@ const PersonBlock = ({ name, color }) => {
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginTop: 25, backgroundColor: color, borderRadius: 10 }}>
-            <Text style={{ color: '#242F40', fontWeight: 900, marginRight: 15, fontSize: 24 }}>{name}</Text>
+            <TextInput
+                value={name}
+                onChangeText={setName} // Met à jour le nom du joueur lors de la saisie
+                placeholder="Nom du joueur"
+                placeholderTextColor='#242F40'
+                style={{ borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, marginTop: 10, width: 220, textAlign: 'center', fontSize: 20 }}
+            />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => handleShortPress(-1)}
