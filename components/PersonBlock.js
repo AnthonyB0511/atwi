@@ -2,12 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
-const PersonBlock = ({ initialName, color }) => {
-    const [name, setName] = useState(initialName); // State pour le nom du joueur
+const PersonBlock = ({ initialName, initialIndex, color, onScoreChange }) => {
+    const [name, setName] = useState(initialName || `Joueur ${initialIndex + 1}`); // State pour le nom du joueur
     const [score, setScore] = useState(0);
     const [operationValue, setOperationValue] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInputValue, setModalInputValue] = useState('');
+
 
     const handleShortPress = (value) => {
         setScore(score + value);
@@ -17,16 +18,21 @@ const PersonBlock = ({ initialName, color }) => {
         setOperationValue(value);
         setModalVisible(true);
     };
-    useEffect(() => {
-        if (!modalVisible) {
-            setModalInputValue('');
-        }
-    }, [modalVisible]);
+
 
     const handleModalButtonPress = (value) => {
         setScore(score + value);
         setModalVisible(false);
     };
+    useEffect(() => {
+        if (!modalVisible) {
+            setModalInputValue('');
+        }
+    }, [modalVisible]);
+    useEffect(() => {
+        onScoreChange(score, name); // Call onScoreChange with the new score and player name
+    }, [score, name, onScoreChange]);
+
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginTop: 25, backgroundColor: color, borderRadius: 10 }}>
