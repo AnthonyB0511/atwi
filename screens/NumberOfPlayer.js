@@ -13,6 +13,7 @@ export default function NumberOfPlayers() {
     const [error, setError] = useState("");
     const [highestScore, setHighestScore] = useState(0);
     const [scores, setScores] = useState([0]);
+    const [players, setPlayers] = useState([{ name: 'Joueur 1', score: 0 }]);
     const [playerWithHighestScore, setPlayerWithHighestScore] = useState([]);
     const colors = ['#F4FA58', '#81DAF5', '#81F781', '#F79F81', '#E6E6E6', '#81F7BE', '#8181F7'];
 
@@ -21,8 +22,15 @@ export default function NumberOfPlayers() {
             setLoading(false);
         }, 2000);
     }, []);
+    const handleNameChange = (index, newName) => {
+        const newPlayer = [...players];
+        newPlayer[index] = { name: newName, score: 0 };
+        setPlayers(newPlayer);
+    };
     const addPlayer = () => {
         setNumber(number + 1);
+        const newPlayer = { name: `Joueur ${players.length + 1}`, score: 0 };
+        setPlayers([...players, newPlayer]);
     };
     const delPlayer = () => {
         if (number > 1) {
@@ -30,40 +38,33 @@ export default function NumberOfPlayers() {
         }
     };
 
-    const getPlayerScore = (playerName) => {
-        const playerIndex = parseInt(playerName.split(" ")[1]) - 1; // Obtient l'index du joueur à partir du nom
-        return scores[playerIndex]; // Renvoie le score du joueur correspondant
-    };
-    const handleScoreChange = (score, playerName) => {
-        const playerIndex = parseInt(playerName.split(" ")[1]) - 1; // Obtient l'index du joueur à partir du nom
-        const currentScore = scores[playerIndex];
+    // const getPlayerScore = (playerName) => {
+    //     const playerIndex = parseInt(playerName.split(" ")[1]) - 1; // Obtient l'index du joueur à partir du nom
+    //     return scores[playerIndex]; // Renvoie le score du joueur correspondant
+    // };
 
+    const handleScoreChange = (score, playerName) => {
+        const playerIndex = parseInt(playerName.split(" ")[1]) - 1;
+        const currentScore = scores[playerIndex];
         if (score !== currentScore) {
-            // Vérifie d'abord si le score a changé
             const newScores = [...scores];
             newScores[playerIndex] = score;
-            setScores(newScores);
-
-            if (score > highestScore) {
-                setHighestScore(score);
-                setPlayerWithHighestScore([playerName]);
-            } else if (score < highestScore && playerName === playerWithHighestScore) {
-                // Si le joueur perd le meilleur score, retirez-le de playerWithHighestScore
-                setPlayerWithHighestScore(() => playerWithHighestScore.filter((player) => player !== playerName));
-
-                // Recherchez le nouveau score le plus élevé parmi les joueurs restants
-                let newHighestScore = 0;
-                for (let i = 1; i <= number; i++) {
-                    const playerScore = getPlayerScore(`Joueur ${i}`);
-                    if (playerScore > newHighestScore) {
-                        newHighestScore = playerScore;
-                        setPlayerWithHighestScore(`Joueur ${i}`);
-                    }
+            let newHighestScore = Math.max(...newScores);
+            let newPlayersWithHighestScore = [];
+            newScores.forEach((playerScore, index) => {
+                if (playerScore === newHighestScore) {
+                    newPlayersWithHighestScore.push(`Joueur ${index + 1}`);
                 }
-                setHighestScore(newHighestScore);
-            }
+            });
+            setScores(newScores);
+            setHighestScore(newHighestScore);
+            setPlayerWithHighestScore(newPlayersWithHighestScore);
         }
     };
+
+    ;
+
+
 
 
 
@@ -80,12 +81,14 @@ export default function NumberOfPlayers() {
 
                         </View>
                         <Text style={styles.text}>{playerWithHighestScore} : {highestScore}</Text>
+                        <Text style={styles.text}>{scores.join(" | ")}</Text>
 
                         {Array.from({ length: number }, (_, index) => (
                             <PersonBlock
                                 key={index}
                                 initialIndex={index}
                                 color={colors[index % colors.length]}
+                                onUpdateName={(newName) => handleNameChange(index, newName)}
                                 onScoreChange={handleScoreChange} />
                         ))}
                         <View style={{ marginTop: 20 }}>
@@ -98,7 +101,7 @@ export default function NumberOfPlayers() {
             <StatusBar style="auto" />
         </View>
     );
-}
+};
 
 
 const styles = StyleSheet.create({

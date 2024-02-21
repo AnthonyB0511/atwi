@@ -2,13 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
-const PersonBlock = ({ initialName, initialIndex, color, onScoreChange }) => {
+const PersonBlock = ({ initialName, initialIndex, color, onScoreChange, onUpdateName }) => {
     const [name, setName] = useState(initialName || `Joueur ${initialIndex + 1}`); // State pour le nom du joueur
     const [score, setScore] = useState(0);
     const [operationValue, setOperationValue] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInputValue, setModalInputValue] = useState('');
-
+    useEffect(() => {
+        onUpdateName(name); // Call onUpdateName whenever name changes
+    }, [name]);
 
     const handleShortPress = (value) => {
         setScore(score + value);
@@ -41,7 +43,7 @@ const PersonBlock = ({ initialName, initialIndex, color, onScoreChange }) => {
                 onChangeText={setName} // Met à jour le nom du joueur lors de la saisie
                 placeholder="Nom du joueur"
                 placeholderTextColor='#242F40'
-                style={{ borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, marginTop: 10, width: 220, textAlign: 'center', fontSize: 20 }}
+                style={{ borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, width: 220, textAlign: 'center', fontSize: 20 }}
             />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
