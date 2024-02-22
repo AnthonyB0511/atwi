@@ -2,18 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
-const PersonBlock = ({ initialName, initialIndex, color, onScoreChange, onUpdateName }) => {
-    const [name, setName] = useState(initialName || `Joueur ${initialIndex + 1}`); // State pour le nom du joueur
+const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, updatePlayerWithHighestScore }) => {
+    const [name, setName] = useState(`Joueur ${index + 1}`); // State pour le nom du joueur
     const [score, setScore] = useState(0);
     const [operationValue, setOperationValue] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInputValue, setModalInputValue] = useState('');
-    useEffect(() => {
-        onUpdateName(name); // Call onUpdateName whenever name changes
-    }, [name]);
+    const handleScoreChange = (value) => {
+        setScore(score + value);
+        const updatedPlayer = { ...player, score: score + value };
+        onPlayerChange(index, updatedPlayer);
+    };
 
     const handleShortPress = (value) => {
-        setScore(score + value);
+        handleScoreChange(value);
     };
 
     const handleLongPress = (value) => {
@@ -23,7 +25,7 @@ const PersonBlock = ({ initialName, initialIndex, color, onScoreChange, onUpdate
 
 
     const handleModalButtonPress = (value) => {
-        setScore(score + value);
+        handleScoreChange(value);
         setModalVisible(false);
     };
     useEffect(() => {
@@ -32,15 +34,22 @@ const PersonBlock = ({ initialName, initialIndex, color, onScoreChange, onUpdate
         }
     }, [modalVisible]);
     useEffect(() => {
-        onScoreChange(score, name); // Call onScoreChange with the new score and player name
-    }, [score, name, onScoreChange]);
+        onScoreChange(score, name);
+    }, [score, name]);
 
+    const handleNameChange = (newName) => {
+        setName(newName);
+        // Appeler la fonction de mise à jour du tableau des meilleurs joueurs
+        updatePlayerWithHighestScore(player.name, newName);
+        // Appeler la fonction onPlayerChange pour mettre à jour le nom du joueur dans le state parent
+        onPlayerChange(index, { name: newName, score: player.score });
+    };
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginTop: 25, backgroundColor: color, borderRadius: 10 }}>
             <TextInput
                 value={name}
-                onChangeText={setName} // Met à jour le nom du joueur lors de la saisie
+                onChangeText={handleNameChange} // Met à jour le nom du joueur lors de la saisie
                 placeholder="Nom du joueur"
                 placeholderTextColor='#242F40'
                 style={{ borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, width: 220, textAlign: 'center', fontSize: 20 }}
