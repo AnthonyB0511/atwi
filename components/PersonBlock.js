@@ -2,14 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
-const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, updatePlayerWithHighestScore }) => {
-    const [name, setName] = useState(`Joueur ${index + 1}`); // State pour le nom du joueur
-    const [score, setScore] = useState(0);
+const PersonBlock = ({ index, color, onPlayerChange, onScoreChange, player, updatePlayerWithHighestScore, reset }) => {
+    // const [name, setName] = useState(`Joueur ${index + 1}`); // State pour le nom du joueur
+    // const [score, setScore] = useState(player.score);
+    const { name, score } = player;
     const [operationValue, setOperationValue] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalInputValue, setModalInputValue] = useState('');
     const handleScoreChange = (value) => {
-        setScore(score + value);
+        // setScore(score + value);
         const updatedPlayer = { ...player, score: score + value };
         onPlayerChange(index, updatedPlayer);
     };
@@ -17,6 +18,7 @@ const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, upda
     const handleShortPress = (value) => {
         handleScoreChange(value);
     };
+
 
     const handleLongPress = (value) => {
         setOperationValue(value);
@@ -33,15 +35,10 @@ const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, upda
             setModalInputValue('');
         }
     }, [modalVisible]);
-    // useEffect(() => {
-    //     onScoreChange(score, name);
-    // }, [score, name]);
-    useEffect(() => {
-        if (score !== player.score) {
-            handleScoreChange(score, player.name);
-        }
-    }, [player.score, score]);
 
+    useEffect(() => {
+        onScoreChange(score, name);
+    }, [score, name]);
 
 
     const handleNameChange = (newName) => {

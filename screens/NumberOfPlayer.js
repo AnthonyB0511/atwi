@@ -71,9 +71,7 @@ export default function NumberOfPlayers() {
             }
         }
     };
-    useEffect(() => {
-        console.log(players);
-    }, [players]);
+
     const reset = () => {
         const resetPlayer = players.map((player) => ({
             ...player,
@@ -81,6 +79,7 @@ export default function NumberOfPlayers() {
         }));
         setPlayers(resetPlayer);
     };
+
     const endGame = () => {
         navigation.navigate('AndTheWinnerIs', { topPlayers: playerWithHighestScore });
     };
