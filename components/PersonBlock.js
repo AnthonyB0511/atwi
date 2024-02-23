@@ -33,9 +33,16 @@ const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, upda
             setModalInputValue('');
         }
     }, [modalVisible]);
+    // useEffect(() => {
+    //     onScoreChange(score, name);
+    // }, [score, name]);
     useEffect(() => {
-        onScoreChange(score, name);
-    }, [score, name]);
+        if (score !== player.score) {
+            handleScoreChange(score, player.name);
+        }
+    }, [player.score, score]);
+
+
 
     const handleNameChange = (newName) => {
         setName(newName);
@@ -44,6 +51,7 @@ const PersonBlock = ({ index, color, onScoreChange, onPlayerChange, player, upda
         // Appeler la fonction onPlayerChange pour mettre à jour le nom du joueur dans le state parent
         onPlayerChange(index, { name: newName, score: player.score });
     };
+
 
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginTop: 25, backgroundColor: color, borderRadius: 10 }}>
