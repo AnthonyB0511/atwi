@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
-import CustomButtonValidation from "../components/CustomButtonValidation";
+
 
 const AndTheWinnerIs = ({ route }) => { // Assurez-vous de recevoir `route` en tant que paramètre
     const { topPlayers } = route.params;

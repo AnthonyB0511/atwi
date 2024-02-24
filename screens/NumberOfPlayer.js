@@ -120,20 +120,26 @@ export default function NumberOfPlayers() {
                             ))}
 
 
-                            <View style={{ marginTop: 20 }}>
+                            {/* <View style={{ marginTop: 20 }}>
                                 <CustomButtonValidation title="Fin de partie" onPress={endGame} />
-                            </View>
+                            </View> */}
 
                         </View>
                     </ScrollView>
                     <SafeAreaView style={styles.safeArea}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
+                            <TouchableOpacity
+                                onPress={endGame}
+                                style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
+                                <Icon name="hourglass" size={20} color='#F7B72F' />
+                                <Text style={styles.nav}>Fin de partie</Text>
+                            </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={reset}
-                                style={{ flexDirection: 'row', alignItems: 'center' }} >
-                                <Icon name="backward" size={20} color='#F7B72F' />
-                                <Text style={styles.nav}>Réinitialiser</Text></TouchableOpacity>
+                                style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
+                                <Icon name="repeat" size={20} color='#F7B72F' />
+                                <Text style={styles.nav}>Réinitialiser</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <TouchableOpacity
@@ -180,6 +186,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 100
     },
     winner: {
         marginTop: 50,
@@ -211,8 +218,8 @@ const styles = StyleSheet.create({
     },
     nav: {
         color: '#F7B72F',
-        fontSize: 20,
-        marginLeft: 10
+        fontSize: 18,
+        marginLeft: 5
     }
 
 

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
+
 const PersonBlock = ({ index, color, onPlayerChange, onScoreChange, player, updatePlayerWithHighestScore, reset }) => {
     // const [name, setName] = useState(`Joueur ${index + 1}`); // State pour le nom du joueur
     // const [score, setScore] = useState(player.score);
@@ -41,13 +42,12 @@ const PersonBlock = ({ index, color, onPlayerChange, onScoreChange, player, upda
     }, [score, name]);
 
 
+
     const handleNameChange = (newName) => {
-        setName(newName);
-        // Appeler la fonction de mise à jour du tableau des meilleurs joueurs
         updatePlayerWithHighestScore(player.name, newName);
-        // Appeler la fonction onPlayerChange pour mettre à jour le nom du joueur dans le state parent
         onPlayerChange(index, { name: newName, score: player.score });
     };
+
 
 
     return (
