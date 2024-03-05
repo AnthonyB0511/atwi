@@ -1,13 +1,9 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, Platform, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import { WebBrowser } from 'expo-linking';
 
 const AboutScreen = () => {
     const navigation = useNavigation();
-    // const openLinkedInProfile = async () => {
-    //     await WebBrowser.openBrowserAsync('https://www.linkedin.com/in/abecque');
-    // };
     return (
         <View style={styles.container}>
             <Image source={require('../assets/img/atwi_complete.png')} style={{ width: 250, height: 250 }} />
