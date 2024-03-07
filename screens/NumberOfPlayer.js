@@ -1,27 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, ScrollView, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import LoadingScreen from '../components/LoadingScreen';
 import CustomButton from '../components/CustomButton';
 import PersonBlock from '../components/PersonBlock';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CustomButtonValidation from '../components/CustomButtonValidation';
 import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function NumberOfPlayers() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [players, setPlayers] = useState([{ name: 'Joueur 1', score: 0 }]);
     const [playerWithHighestScore, setPlayerWithHighestScore] = useState(players);
     const colors = ['#F4FA58', '#81DAF5', '#81F781', '#F79F81', '#E6E6E6', '#81F7BE', '#8181F7'];
     const navigation = useNavigation();
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //     }, 2000);
+    // }, []);
 
     const addPlayer = () => {
         const newPlayer = { name: `Joueur ${players.length + 1}`, score: 0 };
@@ -45,10 +44,8 @@ export default function NumberOfPlayers() {
     };
 
     const handleScoreChange = (score, playerName) => {
-        // Trouver le joueur dans le tableau players
         const updatedPlayers = players.map(player => {
             if (player.name === playerName) {
-                // Mettre à jour le score du joueur
                 return { ...player, score };
             }
             return player;
@@ -61,7 +58,6 @@ export default function NumberOfPlayers() {
 
 
     const updatePlayerWithHighestScore = (oldName, newName) => {
-        // Vérifier si le tableau des meilleurs joueurs est vide ou non
         if (playerWithHighestScore.length > 0) {
             const playerWithHighestScoreIndex = playerWithHighestScore.indexOf(oldName);
             if (playerWithHighestScoreIndex !== -1) {
@@ -118,12 +114,6 @@ export default function NumberOfPlayers() {
                                     updatePlayerWithHighestScore={updatePlayerWithHighestScore}
                                 />
                             ))}
-
-
-                            {/* <View style={{ marginTop: 20 }}>
-                                <CustomButtonValidation title="Fin de partie" onPress={endGame} />
-                            </View> */}
-
                         </View>
                     </ScrollView>
                     <SafeAreaView style={styles.safeArea}>
