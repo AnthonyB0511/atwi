@@ -1,9 +1,13 @@
-import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+
 const AboutScreen = () => {
     const navigation = useNavigation();
+    const linkedinProfile = () => {
+        Linking.openURL('https://www.linkedin.com/in/abecque/');
+    };
     return (
         <View style={styles.container}>
             <Image source={require('../assets/img/atwi_complete.png')} style={{ width: 250, height: 250 }} />
@@ -28,18 +32,21 @@ const AboutScreen = () => {
             </View>
             <SafeAreaView style={styles.safeArea}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon name="backward" size={20} color='#F7B72F' />
-                    <Text style={styles.nav} onPress={() => navigation.goBack()} >Retour</Text>
-                </View>
-                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity onPress={openLinkedInProfile}>
-                        <Icon name="linkedin" size={25} color='#F7B72F' />
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="backward" size={20} color='#F7B72F' />
+                        <Text style={styles.nav}>Retour</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={linkedinProfile} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="linkedin" size={25} color='#F7B72F' />
+                        <Text style={styles.nav}>Me contacter</Text>
+                    </TouchableOpacity>
+                </View>
 
 
-            </SafeAreaView>
-        </View>
+            </SafeAreaView >
+        </View >
     );
 };
 const styles = StyleSheet.create({
@@ -55,10 +62,10 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#F7B72F',
-        fontWeight: '800',
+        fontFamily: "ProtestRiot",
         fontSize: 18,
         marginBottom: 10,
-        textAlign: 'justify'
+        textAlign: 'justify',
     },
     safeArea: {
         flexDirection: 'row',
@@ -78,7 +85,8 @@ const styles = StyleSheet.create({
     nav: {
         color: '#F7B72F',
         fontSize: 20,
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: "ProtestRiot"
     }
 
 });

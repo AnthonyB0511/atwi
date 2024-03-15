@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
@@ -22,24 +22,26 @@ const AndTheWinnerIs = ({ route }) => { // Assurez-vous de recevoir `route` en t
             {topPlayers.length === 1 ? (
                 <Text style={styles.winner}>{topPlayers[0].name}</Text>
             ) : (
-                <Text style={styles.winner}>{topPlayers.map((player, index) => (
-                    index === topPlayers.length - 1 ? player.name : `${player.name} || `
-                ))}</Text>
-
+                <>
+                    <Text style={styles.winner}>{topPlayers.map((player, index) => (
+                        index === topPlayers.length - 1 ? player.name : `${player.name} || `
+                    ))}</Text>
+                    <Text style={styles.winner}>Il va falloir rejouer pour vous départager !</Text>
+                </>
 
 
             )
 
             }
             <SafeAreaView style={styles.safeArea}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Icon name="backward" size={20} color='#F7B72F' />
                     <Text style={styles.nav} onPress={() => navigation.goBack()} >Retour</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('About')} style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Icon name="question" size={20} color='#F7B72F' />
-                    <Text style={styles.nav} onPress={() => navigation.navigate('About')} >A propos</Text>
-                </View>
+                    <Text style={styles.nav}>A propos</Text>
+                </TouchableOpacity>
 
 
             </SafeAreaView>
@@ -60,7 +62,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#F7B72F',
         textAlign: 'center',
-        marginBottom: 50
+        marginBottom: 50,
+        fontFamily: "ProtestRiot"
     },
     moreWinner: {
         flexDirection: 'row'
@@ -83,6 +86,7 @@ const styles = StyleSheet.create({
     nav: {
         color: '#F7B72F',
         fontSize: 20,
-        marginLeft: 10
+        marginLeft: 10,
+        fontFamily: "ProtestRiot"
     }
 });

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import CustomButtonValidation from './CustomButtonValidation';
 
@@ -57,21 +57,21 @@ const PersonBlock = ({ index, color, onPlayerChange, onScoreChange, player, upda
                 onChangeText={handleNameChange} // Met à jour le nom du joueur lors de la saisie
                 placeholder="Nom du joueur"
                 placeholderTextColor='#242F40'
-                style={{ borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, width: 220, textAlign: 'center', fontSize: 20 }}
+                style={{ fontFamily: "ProtestRiot", borderWidth: 1, color: '#242F40', borderColor: '#242F40', borderRadius: 5, paddingHorizontal: 5, width: 220, textAlign: 'center', fontSize: 20 }}
             />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => handleShortPress(-1)}
                     onLongPress={() => handleLongPress(-1)}
                     style={{ backgroundColor: color, padding: 10, borderRadius: 5, marginRight: 10, width: 40 }}>
-                    <Text style={{ color: '#242F40', textAlign: 'center', fontWeight: 900, fontSize: 24 }}>-</Text>
+                    <Text style={{ color: '#242F40', textAlign: 'center', fontFamily: "ProtestRiot", fontSize: 24 }}>-</Text>
                 </TouchableOpacity>
-                <Text style={{ color: '#242F40', fontWeight: 900, width: 50, textAlign: 'center', fontSize: 22 }}>{score}</Text>
+                <Text style={{ color: '#242F40', fontFamily: "ProtestRiot", width: 50, textAlign: 'center', fontSize: 22, fontFamily: "ProtestRiot" }}>{score}</Text>
                 <TouchableOpacity
                     onPress={() => handleShortPress(1)}
                     onLongPress={() => handleLongPress(1)}
                     style={{ backgroundColor: color, padding: 10, borderRadius: 5, marginLeft: 10, width: 40 }}>
-                    <Text style={{ color: '#242F40', textAlign: 'center', fontWeight: 900, fontSize: 24 }}>+</Text>
+                    <Text style={{ color: '#242F40', textAlign: 'center', fontFamily: "ProtestRiot", fontSize: 24 }}>+</Text>
                 </TouchableOpacity>
             </View>
             <Modal
@@ -93,7 +93,7 @@ const PersonBlock = ({ index, color, onPlayerChange, onScoreChange, player, upda
                                 keyboardType="numeric"
                                 placeholder="Autre valeur"
                                 placeholderTextColor='#FBAC23'
-                                style={{ borderWidth: 1, color: '#FBAC23', borderColor: '#FBAC23', borderRadius: 5, paddingHorizontal: 5, marginTop: 10, width: 240, textAlign: 'center', fontSize: 20 }}
+                                style={{ borderWidth: 1, color: '#FBAC23', borderColor: '#FBAC23', borderRadius: 5, paddingHorizontal: 5, marginTop: 10, width: 240, textAlign: 'center', fontSize: 20, fontFamily: "ProtestRiot" }}
                             />
                         </View>
 

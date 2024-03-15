@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "atwi",
-    "slug": "atwi",
+    "slug": "and-the-winner-is",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,7 +27,20 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      [
+        "expo-font",
+        {
+          "font": [
+            "./assets/fonts/ProtestRiot-Regular.ttf"
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d848fe39-65d0-4e18-9add-2bbaeaafc3b4"
+      }
+    },
+    "owner": "anthonyb0511"
   }
 }

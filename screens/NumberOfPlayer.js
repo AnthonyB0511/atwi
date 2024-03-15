@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
-import LoadingScreen from '../components/LoadingScreen';
+import { useState } from 'react';
 import CustomButton from '../components/CustomButton';
 import PersonBlock from '../components/PersonBlock';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,17 +9,12 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function NumberOfPlayers() {
-    const [loading, setLoading] = useState(false);
+
     const [players, setPlayers] = useState([{ name: 'Joueur 1', score: 0 }]);
     const [playerWithHighestScore, setPlayerWithHighestScore] = useState(players);
     const colors = ['#F4FA58', '#81DAF5', '#81F781', '#F79F81', '#E6E6E6', '#81F7BE', '#8181F7'];
     const navigation = useNavigation();
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setLoading(false);
-    //     }, 2000);
-    // }, []);
 
     const addPlayer = () => {
         const newPlayer = { name: `Joueur ${players.length + 1}`, score: 0 };
@@ -83,66 +77,66 @@ export default function NumberOfPlayers() {
 
     return (
         <View style={styles.container}>
-            {loading ? (
-                <LoadingScreen />
-            ) : (
-                <>
-                    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                        <View style={styles.winner}>
-                            <View style={styles.icon}>
-                                <Icon name="trophy" size={20} color='#242F40' />
-                            </View>
-                            <Text style={styles.textWinner}>
-                                {playerWithHighestScore.length > 1 ? (`${playerWithHighestScore.length} joueurs ex aequo`) : (`${playerWithHighestScore[0].name} : ${playerWithHighestScore[0].score} pts`)}
-                            </Text>
+            <>
+                <SafeAreaView>
+                    <TouchableOpacity style={styles.winner} onPress={endGame}>
+                        <View style={styles.icon}>
+                            <Icon name="trophy" size={20} color='#242F40' />
                         </View>
-                        <View style={styles.container}>
-                            <View style={styles.button}>
-                                <CustomButton title="+" onPress={addPlayer} />
-                                {players.length > 1 && <CustomButton title="-" onPress={delPlayer} />}
+                        <Text style={styles.textWinner}>
+                            {playerWithHighestScore.length > 1 ? (`${playerWithHighestScore.length} joueurs ex aequo`) : (`${playerWithHighestScore[0].name} : ${playerWithHighestScore[0].score}`)}
+                        </Text>
+                    </TouchableOpacity>
+                </SafeAreaView>
+                <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
-                            </View>
+                    <View style={styles.container}>
+                        <View style={styles.button}>
+                            <CustomButton title="+" onPress={addPlayer} />
+                            {players.length > 1 && <CustomButton title="-" onPress={delPlayer} />}
 
-                            {players.map((player, index) => (
-                                <PersonBlock
-                                    key={index}
-                                    index={index}
-                                    color={colors[index % colors.length]}
-                                    player={player}
-                                    onPlayerChange={handlePlayerChange}
-                                    onScoreChange={handleScoreChange}
-                                    updatePlayerWithHighestScore={updatePlayerWithHighestScore}
-                                />
-                            ))}
-                        </View>
-                    </ScrollView>
-                    <SafeAreaView style={styles.safeArea}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <TouchableOpacity
-                                onPress={endGame}
-                                style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
-                                <Icon name="hourglass" size={20} color='#F7B72F' />
-                                <Text style={styles.nav}>Fin de partie</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={reset}
-                                style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
-                                <Icon name="repeat" size={20} color='#F7B72F' />
-                                <Text style={styles.nav}>Réinitialiser</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('About')}
-                                style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name="question" size={20} color='#F7B72F' />
-                                <Text style={styles.nav}>A propos</Text></TouchableOpacity>
                         </View>
 
+                        {players.map((player, index) => (
+                            <PersonBlock
+                                key={index}
+                                index={index}
+                                color={colors[index % colors.length]}
+                                player={player}
+                                onPlayerChange={handlePlayerChange}
+                                onScoreChange={handleScoreChange}
+                                updatePlayerWithHighestScore={updatePlayerWithHighestScore}
+                            />
+                        ))}
+                    </View>
+                </ScrollView>
+                <SafeAreaView style={styles.safeArea}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={endGame}
+                            style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
+                            <Icon name="hourglass" size={20} color='#F7B72F' />
+                            <Text style={styles.nav}>Fin de partie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={reset}
+                            style={{ flexDirection: 'row', alignItems: 'center', marginRight: 15 }} >
+                            <Icon name="repeat" size={20} color='#F7B72F' />
+                            <Text style={styles.nav}>Réinitialiser</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('About')}
+                            style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon name="question" size={20} color='#F7B72F' />
+                            <Text style={styles.nav}>A propos</Text></TouchableOpacity>
+                    </View>
 
-                    </SafeAreaView>
-                </>
-            )}
+
+                </SafeAreaView>
+            </>
+
 
             <StatusBar style="auto" />
         </View>
@@ -162,6 +156,7 @@ const styles = StyleSheet.create({
         color: '#F7B72F',
         fontWeight: '800',
         fontSize: 24,
+        fontFamily: 'ProtestRiot'
     },
     content: {
         marginVertical: '5%',
@@ -188,6 +183,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center',
     },
+    textWinner: {
+        fontFamily: "ProtestRiot"
+    },
     icon: {
         marginRight: 5
     },
@@ -209,7 +207,8 @@ const styles = StyleSheet.create({
     nav: {
         color: '#F7B72F',
         fontSize: 18,
-        marginLeft: 5
+        marginLeft: 5,
+        fontFamily: "ProtestRiot"
     }
 
 

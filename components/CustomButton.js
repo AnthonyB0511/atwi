@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#242F40',
         fontSize: 18,
-        fontWeight: '700'
+        fontFamily: "ProtestRiot",
+        fontSize: 22
     },
 });
 
